@@ -4,6 +4,7 @@ namespace: pricelist
 
 resources:
 - pricelist-db-pvc.yaml
+- pricelist-db-cm.yaml
 - pricelist-db-svc.yaml
 - pricelist-db.yaml
 - pricelist-deploy.yaml
