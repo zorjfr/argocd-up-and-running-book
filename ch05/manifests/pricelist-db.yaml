@@ -20,20 +20,6 @@ spec:
         app: mysql
         tier: database
     spec:
-      initContainers:
-      # 1. NETTOIE le PVC à chaque redéploiement
-      - name: mysql-data-cleaner
-        image: busybox:1.36
-        command: ['sh', '-c']
-        args:
-        - |
-          echo "Cleaning /var/lib/mysql for fresh MySQL 8 init..."
-          rm -rf /var/lib/mysql/*
-          mkdir -p /var/lib/mysql
-          chown -R 999:999 /var/lib/mysql  # UID mysql dans l'image
-        volumeMounts:
-        - name: mysql-db
-          mountPath: /var/lib/mysql
       containers:
       - image: mysql:8.4.0
         name: mysql
@@ -46,8 +32,10 @@ spec:
           value: pricelist
         - name: MYSQL_RANDOM_ROOT_PASSWORD
           value: "yes"
+        - name: MYSQL_DATADIR
+          value: /var/lib/mysql-data/mysql
         volumeMounts:
-        - mountPath: /var/lib/mysql/data
+        - mountPath: /var/lib/mysql-data
           name: mysql-db
 #        - name: mysql-config
 #          mountPath: /etc/mysql/conf.d/my.cnf
