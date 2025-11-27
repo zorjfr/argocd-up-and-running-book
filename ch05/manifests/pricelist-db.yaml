@@ -21,7 +21,7 @@ spec:
         tier: database
     spec:
       containers:
-      - image: mysql:5.6.51
+      - image: mysql:8.4.0
         name: mysql
         env:
         - name: MYSQL_DATABASE
@@ -35,9 +35,9 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/mysql/data
           name: mysql-db
-        - name: mysql-config
-          mountPath: /etc/mysql/conf.d/my.cnf
-          subPath: my.cnf
+#        - name: mysql-config
+#          mountPath: /etc/mysql/conf.d/my.cnf
+#          subPath: my.cnf
         livenessProbe:
           tcpSocket:
             port: 3306
@@ -59,7 +59,7 @@ spec:
       - name: mysql-db
         persistentVolumeClaim:
           claimName: pricelist-db-pvc
-      - name: mysql-config
-        configMap:
-          name: mysql-config
+#      - name: mysql-config
+#        configMap:
+"          name: mysql-config
 
