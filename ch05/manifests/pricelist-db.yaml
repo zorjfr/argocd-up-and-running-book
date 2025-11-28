@@ -20,8 +20,27 @@ spec:
         app: mysql
         tier: database
     spec:
+      initContainers:
+      - name: mysql-init-config
+        image: busybox:1.36
+        command: ['sh', '-c']
+        args:
+        - |
+          cat > /etc/mysql/conf.d/my.cnf <<EOF
+          [mysqld]
+          innodb_buffer_pool_size = 64M
+          innodb_log_buffer_size = 4M
+          key_buffer_size = 8M
+          query_cache_size = 0
+          max_connections = 10
+          tmp_table_size = 16M
+          max_heap_table_size = 16M
+          EOF
+        volumeMounts:
+        - name: mysql-config
+          mountPath: /etc/mysql/conf.d
       containers:
-      - image: mysql:8.4.0
+      - image: mysql:5.6.51
         name: mysql
         env:
         - name: MYSQL_DATABASE
@@ -37,9 +56,9 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/mysql-data
           name: mysql-db
-#        - name: mysql-config
-#          mountPath: /etc/mysql/conf.d/my.cnf
-#          subPath: my.cnf
+        - name: mysql-config
+          mountPath: /etc/mysql/conf.d/my.cnf
+          subPath: my.cnf
         livenessProbe:
           tcpSocket:
             port: 3306
@@ -55,12 +74,12 @@ spec:
             memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "2Gi"
+            memory: "1Gi"
             cpu: "500m"
       volumes:
       - name: mysql-db
         persistentVolumeClaim:
           claimName: pricelist-db-pvc
-#      - name: mysql-config
-#        configMap:
-#          name: mysql-config
+      - name: mysql-config
+        configMap:
+          name: mysql-config
