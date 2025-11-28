@@ -51,10 +51,8 @@ spec:
           value: pricelist
         - name: MYSQL_RANDOM_ROOT_PASSWORD
           value: "yes"
-        - name: MYSQL_DATADIR
-          value: /var/lib/mysql-data/mysql
         volumeMounts:
-        - mountPath: /var/lib/mysql-data
+        - mountPath: /var/lib/mysql
           name: mysql-db
         - name: mysql-config
           mountPath: /etc/mysql/conf.d/my.cnf
@@ -81,5 +79,4 @@ spec:
         persistentVolumeClaim:
           claimName: pricelist-db-pvc
       - name: mysql-config
-        configMap:
-          name: mysql-config
+          emptyDir: {}
