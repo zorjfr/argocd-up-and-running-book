@@ -79,4 +79,4 @@ spec:
         persistentVolumeClaim:
           claimName: pricelist-db-pvc
       - name: mysql-config
-          emptyDir: {}
+        emptyDir: {}
