@@ -79,7 +79,7 @@ spec:
             memory: "512Mi"
             cpu: "250m"
           limits:
-            memory: "1500Mi"
+            memory: "2300Mi"
             cpu: "500m"
       volumes:
       - name: mysql-db
