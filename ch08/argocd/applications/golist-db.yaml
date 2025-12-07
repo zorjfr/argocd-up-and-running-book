@@ -16,13 +16,13 @@ spec:
         - name: auth.password
           value: "golist"
         - name: image.tag          # ← AJOUTEZ CES 3 LIGNES
-          value: "10.6.8-debian-11-r9"
-          # value: "latest"
+          # value: "10.6.8-debian-11-r9"
+          value: "latest"
         - name: image.registry
           value: "docker.io"
         - name: image.repository
-          value: "bitnamilegacy/mariadb"
-          # value: "bitnami/mariadb"
+          # value: "bitnamilegacy/mariadb"
+          value: "bitnami/mariadb"
     chart: mariadb
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 11.1.0
