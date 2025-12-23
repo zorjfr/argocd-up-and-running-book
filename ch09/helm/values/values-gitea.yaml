@@ -29,5 +29,7 @@ gitea:
     enabled: false
   postgresql:
     enabled: true
+    image:
+      repository: bitnamilegacy/postgresql
   redis-cluster:
     enabled: false
